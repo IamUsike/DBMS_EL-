@@ -4,7 +4,7 @@ import {
   isPasswordCorrect,
   generateAccessToken,
   generateRefreshToken,
-} from "./utils/userUtils";
+} from "./utils/userUtils.js";
 
 const customerSchema = new Schema(
   {
