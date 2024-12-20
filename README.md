@@ -21,7 +21,7 @@ This project is part of our *DBMS lab*, where we are developing a **Real Estate 
 
 1.  Clone the repository:
     ```bash
-    git clone [https://github.com/](https://github.com/)<your_username>/DBMS_EL.git
+    git clone [https://github.com/](https://github.com/)IamUsike/DBMS_EL.git
     ```
 2.  Navigate to the project directory:
     ```bash
