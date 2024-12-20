@@ -1,6 +1,10 @@
 import mongoose, { Schema } from "mongoose";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import {
+  hashPassword,
+  isPasswordCorrect,
+  generateAccessToken,
+  generateRefreshToken,
+} from "./utils/userUtils";
 
 const customerSchema = new Schema(
   {
@@ -43,7 +47,13 @@ const customerSchema = new Schema(
     },
     phoneNumber: {
       type: String,
-      required: [true, "Field Cannot be empty"],
+      required: [true, "Phone number is required"],
+      validate: {
+        validator: function (v) {
+          return /^\+?[1-9]\d{1,14}$/.test(v); // E.164 format
+        },
+        message: "Invalid phone number format",
+      },
     },
     dob: {
       type: Date,
@@ -83,6 +93,7 @@ const customerSchema = new Schema(
     },
     refreshToken: {
       type: String,
+      default: null,
     },
   },
   {
@@ -92,39 +103,19 @@ const customerSchema = new Schema(
 
 customerSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
-  this.password = await bcrypt.hash(this.password, 10);
+  this.password = await hashPassword(this.password);
   next();
 });
 
-customerSchema.methods.isPasswordCorrect = async function (password) {
-  return await bcrypt.compare(password, this.password);
-};
+customerSchema.methods.isPasswordCorrect = async function(password){
+    return await isPasswordCorrect(password, this.password)
+}
 
-//JWT SHIT
-// https://github.com/auth0/node-jsonwebtoken#readme
-//method to generate access token
 customerSchema.methods.generateAccessToken = function () {
-  return jwt.sign(
-    {
-      _id: this._id,
-    },
-    process.env.ACCESS_TOKEN_SECRET,
-    {
-      expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
-    }
-  );
+  return generateAccessToken(this._id);
 };
 
 customerSchema.methods.generateRefreshToken = function () {
-  return jwt.sign(
-    {
-      _id: this._id,
-    },
-    process.env.REFRESH_TOKEN_SECRET,
-    {
-      expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
-    }
-  );
+  return generateRefreshToken(this._id);
 };
-
 export const Customer = mongoose.model("Customer", customerSchema);
