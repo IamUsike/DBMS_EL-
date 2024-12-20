@@ -64,10 +64,6 @@ const ownerSchema = new Schema(
           message: "Date of birth cannot be in the future",
         },
       },
-      occupation: {
-        type: String,
-        required: [true, "Field Cannot be empty"],
-      },
       address: {
         street: {
           type: String,
@@ -94,19 +90,34 @@ const ownerSchema = new Schema(
         type: String,
         default: null,
       },
-      PropertyCount: { type: Number, default: 0 },
-      PropertiesOwned: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Property' }],
-      LicenseNumber: { type: String },
-      RegistrationDate: { type: Date, default: Date.now },
-      Status: { type: String, enum: ['Active', 'Inactive', 'Suspended'], default: 'Active' },
-      Preferences: {
-        PropertyType: [String], 
-        Location: [String],     
+      propertyCount: {
+         type: Number, 
+         default: 0 
+        },
+      propertiesOwned: [{
+         type: mongoose.Schema.Types.ObjectId, 
+         ref: 'Property' 
+        }],
+      licenseNumber: { 
+        type: String 
+       },
+      registrationDate: { 
+        type: Date, 
+        default: Date.now },
+      status: { 
+        type: String,
+         enum: ['Active', 'Inactive', 'Suspended'],
+       default: 'Active' },
+    
+      contactNo: {
+       type:String,
+       required: [true, "Phone number is required"],
+      validate: {
+        validator: function (v) {
+          return /^\+?[1-9]\d{1,14}$/.test(v); // E.164 format
+        },
+        message: "Invalid phone number format",
       },
-      EmergencyContact: {
-        Name: { type: String },
-        Relationship: { type: String },
-        PhoneNumber: { type: String },
       },
     },
     { timestamps: true }  
