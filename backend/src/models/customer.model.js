@@ -39,7 +39,7 @@ const customerSchema = new Schema(
       validate: {
         validator: function (v) {
           // Add regex for password strength (e.g., must contain numbers, special chars, etc.)
-          return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])/.test(v);
+          return /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$/.test(v);
         },
         message:
           "Password must contain at least one number, one uppercase letter, one lowercase letter, and one special character",
@@ -107,9 +107,9 @@ customerSchema.pre("save", async function (next) {
   next();
 });
 
-customerSchema.methods.isPasswordCorrect = async function(password){
-    return await isPasswordCorrect(password, this.password)
-}
+customerSchema.methods.isPasswordCorrect = async function (password) {
+  return await isPasswordCorrect(password, this.password);
+};
 
 customerSchema.methods.generateAccessToken = function () {
   return generateAccessToken(this._id);
