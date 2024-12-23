@@ -9,6 +9,20 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    position: relative;
+    background: url('https://civildigital.com/wp-content/uploads/2023/08/Aesthetic-Excellence-Blending-Style-And-Substance-In-Home-Construction-1024x574.jpeg') no-repeat center center/cover;
+  }
+  
+  body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    filter: blur(5px);
+    z-index: -1;
   }
   
   header {
@@ -27,7 +41,7 @@
   nav a {
     margin: 0 10px;
     text-decoration: none;
-    color: black;
+    color: white;
   }
   
   .profile {
@@ -65,11 +79,16 @@
     display: flex;
     flex: 1;
     padding: 20px;
+    z-index: 1;
   }
   
   .form-container {
     flex: 1;
     max-width: 600px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   }
   
   form {
