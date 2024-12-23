@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EzyHomes Registration</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="logo">EzyHomes</div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+      <a href="#">Agents</a>
+    </nav>
+    <div class="profile">
+      <img src="profile.jpg" alt="Profile Picture">
+      <button class="profile-btn">Profile <span class="notification">3</span></button>
+    </div>
+  </header>
+  <main>
+    <div class="form-container">
+      <h1>Create an Account</h1>
+      <form id="registrationForm" enctype="multipart/form-data">
+        <div class="form-row">
+          <input type="text" name="userName" placeholder="Username" required>
+          <input type="text" name="displayName" placeholder="Display Name" required>
+        </div>
+        <div class="form-row">
+          <input type="email" name="email" placeholder="Email" required>
+          <input type="password" name="password" placeholder="Password (8+ chars, 1 letter, number, special char)" required>
+        </div>
+        <div class="form-row">
+          <input type="tel" name="phoneNumber" placeholder="Phone Number" required>
+          <input type="date" name="dob" required>
+        </div>
+        <div class="form-row">
+          <select name="occupation" id="occupation" required>
+            <option value="">Select Role</option>
+            <option value="buyer">Buyer</option>
+            <option value="seller">Seller</option>
+            <option value="agent">Agent</option>
+          </select>
+          <input type="file" name="avatar" id="avatar" accept="image/*">
+        </div>
+        <h3>Address</h3>
+        <div class="form-row">
+          <input type="text" name="street" placeholder="Street Address" required>
+          <input type="text" name="city" placeholder="City" required>
+        </div>
+        <div class="form-row">
+          <input type="text" name="state" placeholder="State" required>
+          <input type="text" name="zipCode" placeholder="ZIP Code" required>
+        </div>
+        <div class="form-row">
+          <input type="text" name="country" placeholder="Country" required>
+        </div>
+        <button type="submit">Register</button>
+      </form>
+      <p><a href="#">Do you have an account?</a></p>
+    </div>
+    <div class="image-container">
+      <img src="https://civildigital.com/wp-content/uploads/2023/08/Aesthetic-Excellence-Blending-Style-And-Substance-In-Home-Construction-1024x574.jpeg" alt="Building 1">
+      <img src="https://www1.lovethatdesign.com/wp-content/uploads/2022/08/Love-That-Design-Aesthetic-House-Kyiv-08-2048x1367.jpg" alt="Building 2">
+      <!-- <img src="building3.jpg" alt="Building 3"> -->
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
