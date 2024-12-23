@@ -26,7 +26,7 @@ document.getElementById("registrationForm").addEventListener("submit", async fun
   
     // Add avatar file if present
     const avatarFile = formData.get("avatar");
-    if (avatarFile && avatarFile.size > 0) {
+    if (avaAtarFile && avatarFile.size > 0) {
       payload.avatar = avatarFile;
     }
   
