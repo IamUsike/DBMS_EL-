@@ -93,4 +93,39 @@ const registerCustomer = asyncHandler(async (req, res) => {
     );
 });
 
-export { registerCustomer };
+//login user || Access and refresh token functionality still to be added
+const loginCustomer = asyncHandler(async (req, res) => {
+  const { userName, password } = req.body;
+  if (!userName) {
+    throw new ApiError(400, "Username required");
+  }
+
+  const customer = await Customer.findOne({userName});
+  // console.log(userName, customer)
+  if (!customer) {
+    throw new ApiError(400, "User Does not exist");
+  }
+
+  const isPasswordValid = await customer.isPasswordCorrect(password);
+  if (!isPasswordValid) {
+    throw new ApiError(404, "Incorrect password");
+  }
+
+  const loggedInCustomer = await Customer.findById(customer._id).select(
+    "-password -refreshToken"
+  );
+
+  return res
+  .status(200)
+  .json(
+    new ApiResponse(
+      200,
+      {
+        user: loggedInCustomer
+      },
+      "User Logged in Successfully"
+    )
+  )
+});
+
+export { registerCustomer, loginCustomer };
