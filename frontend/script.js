@@ -1,9 +1,11 @@
-document.getElementById("registrationForm").addEventListener("submit", async function (event) {
+document
+  .getElementById("registrationForm")
+  .addEventListener("submit", async function (event) {
     event.preventDefault();
-  
+
     const formData = new FormData(this);
-  
-    // Construct address object
+
+    // Create the address object and append it as a JSON string
     const address = {
       street: formData.get("street"),
       city: formData.get("city"),
@@ -11,34 +13,26 @@ document.getElementById("registrationForm").addEventListener("submit", async fun
       zipCode: formData.get("zipCode"),
       country: formData.get("country"),
     };
-  
-    // Build the request payload
-    const payload = {
-      userName: formData.get("userName"),
-      displayName: formData.get("displayName"),
-      email: formData.get("email"),
-      password: formData.get("password"),
-      phoneNumber: formData.get("phoneNumber"),
-      occupation: formData.get("occupation"),
-      dob: formData.get("dob"),
-      address: address,
-    };
-  
-    // Add avatar file if present
-    const avatarFile = formData.get("avatar");
-    if (avaAtarFile && avatarFile.size > 0) {
-      payload.avatar = avatarFile;
-    }
-  
+
+    // Remove individual address fields to avoid duplicates
+    formData.delete("street");
+    formData.delete("city");
+    formData.delete("state");
+    formData.delete("zipCode");
+    formData.delete("country");
+
+    // Append the address object as a stringified JSON
+    formData.append("address", JSON.stringify(address));
+
     try {
-      const response = await fetch("http://localhost:8000/api/customers/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-  
+      const response = await fetch(
+        "http://localhost:8000/api/customers/register",
+        {
+          method: "POST",
+          body: formData, // FormData handles files and other data
+        }
+      );
+
       if (response.ok) {
         alert("User registered successfully!");
         this.reset();
@@ -51,4 +45,3 @@ document.getElementById("registrationForm").addEventListener("submit", async fun
       console.error(error);
     }
   });
-  
