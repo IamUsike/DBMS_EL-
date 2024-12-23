@@ -42,7 +42,7 @@ const customerSchema = new Schema(
           return /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$/.test(v);
         },
         message:
-          "Password must contain at least one number, one uppercase letter, one lowercase letter, and one special character",
+          "Password must contain at least one number, one letter, and one special character",
       },
     },
     phoneNumber: {
